@@ -25,8 +25,16 @@ enabled = true
 
 # Environment Variables
 # https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-# [vars]
-# MY_VARIABLE = "production_value"
+
+[vars]
+
+SESSION_SECRET = "foobar"
+PUBLIC_STORE_DOMAIN = "mock.shop"
+PUBLIC_SANITY_PROJECT_ID = "nv2pxiqn"
+PUBLIC_SANITY_DATASET = "production"
+PUBLIC_SANITY_STUDIO_URL = "https://nv2pxiqn.sanity.studio"
+SANITY_VIEWER_TOKEN = "skUdTe8sP3UfFvUnrkuYlroBbwPU4wZLoPk8RZU8IBXSr9wbvJAvYu9KchhekkR5A5sUnljQ4iEewWt31pJQ1hp34BwKQ23czGEI1MwMLjhD7vCsxhPlWZYNpDb6WLIjmjxfLNYKtjTgHxMebxRcRTT7Q6QoylDaxNqQjV6jBjrmbjbtNlF6"
+
 
 # Note: Use secrets to store sensitive data.
 # https://developers.cloudflare.com/workers/configuration/secrets/

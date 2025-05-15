@@ -2,6 +2,7 @@
   "include": [
     "worker-configuration.d.ts",
     "env.d.ts",
+    "./**/*.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/.server/**/*.ts",
@@ -12,9 +13,10 @@
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": [
-        "@cloudflare/workers-types/2023-07-01",
-        "@remix-run/cloudflare",
-        "vite/client"
+      "@cloudflare/workers-types/2023-07-01",
+      "@remix-run/cloudflare",
+      "@remix-run/server-runtime",
+      "vite/client"
     ],
     "isolatedModules": true,
     "esModuleInterop": true,

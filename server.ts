@@ -1,16 +1,21 @@
 import { createRequestHandler, type ServerBuild } from "@remix-run/cloudflare";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore This file won’t exist if it hasn’t yet been built
-import * as build from "./build/server"; // eslint-disable-line import/no-unresolved
-import { getLoadContext } from "./load-context";
+//import * as remixBuild from "virtual:remix/server-build";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleRemixRequest = createRequestHandler(build as any as ServerBuild);
+import * as build from "./build/server"; // eslint-disable-line import/no-unresolved
+import { storefrontRedirect } from "@shopify/hydrogen";
+import { getLoadContext } from "~/lib/context";
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
     try {
-      const loadContext = getLoadContext({
+      console.log("hello");
+      const loadContext = await getLoadContext({
         request,
         context: {
           cloudflare: {
@@ -28,10 +33,41 @@ export default {
           },
         },
       });
-      return await handleRemixRequest(request, loadContext);
+
+      /**
+       * Create a Remix request handler and pass
+       * Hydrogen's Storefront client to the loader context.
+       */
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handleRequest = createRequestHandler(
+        build as ServerBuild,
+        process.env.NODE_ENV || ""
+      );
+
+      const response = await handleRequest(request, loadContext);
+
+      if (loadContext.session.isPending) {
+        response.headers.set("Set-Cookie", await loadContext.session.commit());
+      }
+
+      if (response.status === 404) {
+        /**
+         * Check for redirects only when there's a 404 from the app.
+         * If the redirect doesn't exist, then `storefrontRedirect`
+         * will pass through the 404 response.
+         */
+        return storefrontRedirect({
+          request,
+          response,
+          storefront: loadContext.storefront,
+        });
+      }
+
+      return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return new Response("An unexpected error occurred", { status: 500 });
     }
   },
-} satisfies ExportedHandler<Env>;
+};

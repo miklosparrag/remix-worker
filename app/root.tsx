@@ -5,7 +5,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/cloudflare";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 
 import "./tailwind.css";
 
@@ -21,6 +21,11 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+
+export async function loader({ context }: LoaderFunctionArgs) {
+  console.log("root");
+  return null;
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
