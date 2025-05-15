@@ -3,7 +3,7 @@ import { createRequestHandler, type ServerBuild } from "@remix-run/cloudflare";
 // @ts-ignore This file won’t exist if it hasn’t yet been built
 //import * as remixBuild from "virtual:remix/server-build";
 
-import * as build from "./build/server"; // eslint-disable-line import/no-unresolved
+import * as build from "./dist/server"; // eslint-disable-line import/no-unresolved
 import { storefrontRedirect } from "@shopify/hydrogen";
 import { getLoadContext } from "~/lib/context";
 
@@ -41,7 +41,7 @@ export default {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const handleRequest = createRequestHandler(
-        build as ServerBuild,
+        build as any as ServerBuild,
         process.env.NODE_ENV || ""
       );
 
