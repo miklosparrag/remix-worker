@@ -4,3 +4,9 @@ node_modules
 /build
 .env
 .dev.vars
+/.cache
+/dist
+/public/build
+/.mf
+.env
+.shopify

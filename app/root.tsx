@@ -5,12 +5,14 @@ import {
   Scripts,
   ScrollRestoration,
   useRouteLoaderData,
+  type ShouldRevalidateFunction,
 } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { FOOTER_QUERY, HEADER_QUERY } from "~/lib/fragments";
 import { Analytics, getShopAnalytics, useNonce } from "@shopify/hydrogen";
 
 import "./tailwind.css";
+import { PageLayout } from "./components/shopify/PageLayout";
 
 export type RootLoader = typeof loader;
 
@@ -26,6 +28,28 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+
+/**
+ * This is important to avoid re-fetching root queries on sub-navigations
+ */
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  formMethod,
+  currentUrl,
+  nextUrl,
+}) => {
+  // revalidate when a mutation is performed e.g add to cart, login...
+  if (formMethod && formMethod !== "GET") return true;
+
+  // revalidate when manually revalidating via useRevalidator
+  if (currentUrl.toString() === nextUrl.toString()) return true;
+
+  // Defaulting to no revalidation for root loader data to improve performance.
+  // When using this feature, you risk your UI getting out of sync with your server.
+  // Use with caution. If you are uncomfortable with this optimization, update the
+  // line below to `return defaultShouldRevalidate` instead.
+  // For more details see: https://remix.run/docs/en/main/route/should-revalidate
+  return false;
+};
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -107,7 +131,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>("root");
 
-  console.log(data);
   return (
     <html lang="en">
       <head>
@@ -117,9 +140,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        {data ? (
+          <Analytics.Provider
+            cart={data.cart}
+            shop={data.shop}
+            consent={data.consent}
+          >
+            <PageLayout {...data}>{children}</PageLayout>
+          </Analytics.Provider>
+        ) : (
+          children
+        )}
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
