@@ -14,7 +14,6 @@ export default {
     ctx: ExecutionContext
   ): Promise<Response> {
     try {
-      console.log("hello");
       const loadContext = await getLoadContext({
         request,
         context: {

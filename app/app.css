@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
+
+@import "tailwindcss" source(".");
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-dark-purple: #6c3679;
+  --white: white;
+  --off-black: #333;
+  --dark-blue: #064ea4;
+  --color-light-purple: #a07dbf;
+  --paragraph: Inter, sans-serif;
+  --newsreader: "Newsreader 36 Pt", sans-serif;
+  --p: 19px;
+  --hero-desktop: 48px;
+  --h2: 34px;
+  --p3: 21px;
+  --p2: 19px;
+  --h3: 28px;
+  --light-orange: #f99d77;
+  --light-grey: #f1f1f1;
+  --h1: 48px;
+  --h4: 22px;
+  --h5: 21px;
+  --h6: 19px;
+}
+
+html,
+body {
+  @apply bg-white dark:bg-gray-950;
+
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+}

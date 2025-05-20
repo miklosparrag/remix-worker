@@ -6,6 +6,7 @@ import {
 import { hydrogen } from "@shopify/hydrogen/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { getLoadContext } from "./app/lib/context";
+import tailwindcss from "@tailwindcss/vite";
 
 declare module "@remix-run/cloudflare" {
   interface Future {
@@ -15,6 +16,7 @@ declare module "@remix-run/cloudflare" {
 
 export default defineConfig({
   plugins: [
+    tailwindcss(),
     cloudflareDevProxyVitePlugin({
       getLoadContext,
     }),
@@ -42,5 +44,12 @@ export default defineConfig({
   },
   build: {
     minify: true,
+  },
+  server: {
+    allowedHosts: [
+      "localhost",
+      "shopitest.parrag.net",
+      "glorious-mature-filly.ngrok-free.app",
+    ],
   },
 });

@@ -8,6 +8,8 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import { storefrontRedirect } from "@shopify/hydrogen";
+import { createContentSecurityPolicy } from "@shopify/hydrogen";
 
 const ABORT_DELAY = 5000;
 
@@ -19,18 +21,46 @@ export default async function handleRequest(
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext
+  context: AppLoadContext
 ) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
 
+  const { nonce, header, NonceProvider } = createContentSecurityPolicy({
+    connectSrc: [
+      // (ie. 'wss://<your-ngrok-domain>.app:*')
+      "self",
+      "wss://shopitest.parrag.net:*",
+      "https://glorious-mature-filly.ngrok-free.app",
+      "wss://glorious-mature-filly.ngrok-free.app",
+    ],
+    fontSrc: [
+      "self",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+    ],
+    styleSrc: [
+      "self",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+    ],
+    shop: {
+      checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+      storeDomain: context.env.PUBLIC_STORE_DOMAIN,
+    },
+  });
+
   const body = await renderToReadableStream(
-    <RemixServer
-      context={remixContext}
-      url={request.url}
-      abortDelay={ABORT_DELAY}
-    />,
+    <NonceProvider>
+      <RemixServer
+        context={remixContext}
+        url={request.url}
+        abortDelay={ABORT_DELAY}
+        nonce={nonce}
+      />
+    </NonceProvider>,
     {
+      nonce,
       signal: controller.signal,
       onError(error: unknown) {
         if (!controller.signal.aborted) {
@@ -48,9 +78,29 @@ export default async function handleRequest(
     await body.allReady;
   }
 
+  if (context.session.isPending) {
+    responseHeaders.set("Set-Cookie", await context.session.commit());
+  }
+
   responseHeaders.set("Content-Type", "text/html");
-  return new Response(body, {
+  responseHeaders.set("Content-Security-Policy", header);
+
+  const response = new Response(body, {
     headers: responseHeaders,
     status: responseStatusCode,
   });
+
+  if (responseStatusCode === 404) {
+    /**
+     * Check for redirects only when there's a 404 from the app.
+     * If the redirect doesn't exist, then `storefrontRedirect`
+     * will pass through the 404 response.
+     */
+    return storefrontRedirect({
+      request,
+      response,
+      storefront: context.storefront,
+    });
+  }
+  return response;
 }

@@ -1,9 +1,11 @@
 import {
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
   useRouteLoaderData,
   type ShouldRevalidateFunction,
 } from "@remix-run/react";
@@ -11,8 +13,9 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { FOOTER_QUERY, HEADER_QUERY } from "~/lib/fragments";
 import { Analytics, getShopAnalytics, useNonce } from "@shopify/hydrogen";
 
-import "./tailwind.css";
-import { PageLayout } from "./components/shopify/PageLayout";
+import "tailwindcss";
+import "./app.css";
+//import { PageLayout } from "./components/shopify/PageLayout";
 
 export type RootLoader = typeof loader;
 
@@ -146,7 +149,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout {...data}>{children}</PageLayout>
+            {children}
           </Analytics.Provider>
         ) : (
           children
@@ -160,4 +163,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  let errorMessage = "Unknown error";
+  let errorStatus = 500;
+
+  if (isRouteErrorResponse(error)) {
+    errorMessage = error?.data?.message ?? error.data;
+    errorStatus = error.status;
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+
+  return (
+    <div className="route-error">
+      <h1>Oops</h1>
+      <h2>{errorStatus}</h2>
+      {errorMessage && (
+        <fieldset>
+          <pre>{errorMessage}</pre>
+        </fieldset>
+      )}
+    </div>
+  );
 }

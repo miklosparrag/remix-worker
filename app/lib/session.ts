@@ -1,4 +1,4 @@
-import type { HydrogenSession } from "@shopify/hydrogen";
+import type { HydrogenSession, HydrogenSessionData } from "@shopify/hydrogen";
 import {
   createCookieSessionStorage,
   type SessionStorage,
@@ -10,7 +10,7 @@ import {
  * Feel free to customize it to your needs, add helper methods, or
  * swap out the cookie-based implementation with something else!
  */
-export class AppSession implements HydrogenSession {
+export class AppSession implements HydrogenSession<HydrogenSessionData> {
   public isPending = false;
 
   #sessionStorage;
@@ -22,7 +22,7 @@ export class AppSession implements HydrogenSession {
   }
 
   static async init(request: Request, secrets: string[]) {
-    const storage = createCookieSessionStorage({
+    const storage = createCookieSessionStorage<HydrogenSessionData>({
       cookie: {
         name: "session",
         httpOnly: true,
