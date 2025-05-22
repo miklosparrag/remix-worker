@@ -2,8 +2,9 @@
 # For more details on how to configure Wrangler, refer to:
 # https://developers.cloudflare.com/workers/wrangler/configuration/
 name = "remix-worker"
-compatibility_date = "2025-05-14"
+compatibility_date = "2025-05-07"
 main = "./server.ts"
+compatibility_flags = [ "nodejs_compat", "nodejs_compat_populate_process_env" ]
 
 [assets]
 directory = "./dist/client"
@@ -28,19 +29,6 @@ enabled = true
 
 [vars]
 
-PUBLIC_SANITY_PROJECT_ID = "nv2pxiqn"
-PUBLIC_SANITY_DATASET = "production"
-PUBLIC_SANITY_STUDIO_URL = "https://nv2pxiqn.sanity.studio"
-SANITY_VIEWER_TOKEN = "skUdTe8sP3UfFvUnrkuYlroBbwPU4wZLoPk8RZU8IBXSr9wbvJAvYu9KchhekkR5A5sUnljQ4iEewWt31pJQ1hp34BwKQ23czGEI1MwMLjhD7vCsxhPlWZYNpDb6WLIjmjxfLNYKtjTgHxMebxRcRTT7Q6QoylDaxNqQjV6jBjrmbjbtNlF6"
-PUBLIC_STOREFRONT_ID = "1000035934"
-PUBLIC_STOREFRONT_API_TOKEN = "6129c6026c551fecce54a473a90bd20d"
-PUBLIC_STORE_DOMAIN = "grfxd5-9v.myshopify.com"
-PRIVATE_STOREFRONT_API_TOKEN = "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"
-PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID = "shp_d5b9d1f9-856e-4c11-8f48-2a27a633243b"
-PUBLIC_CUSTOMER_ACCOUNT_API_URL = "https://shopify.com/94253285641"
-SHOP_ID = "94253285641"
-SESSION_SECRET = "448aab3e0cae5dd09ae2787b91c62e6d1231bbbc"
-NODE_ENV = "development"
 
 # Note: Use secrets to store sensitive data.
 # https://developers.cloudflare.com/workers/configuration/secrets/

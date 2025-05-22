@@ -1,7 +1,6 @@
 import { createHydrogenContext } from "@shopify/hydrogen";
 import { AppSession } from "./session";
 import { CART_QUERY_FRAGMENT } from "./fragments";
-//import {previewContext} from '~/sanity/preview.server';
 
 /**
  * The context implementation is separate from server.ts
@@ -9,6 +8,7 @@ import { CART_QUERY_FRAGMENT } from "./fragments";
  * */
 
 import { type PlatformProxy } from "wrangler";
+import { previewContext } from "../sanity/preview.server";
 
 type GetLoadContextArgs = {
   request: Request;
@@ -56,8 +56,11 @@ export async function getLoadContext({ request, context }: GetLoadContextArgs) {
     },
   });
 
+  const sanity = await previewContext(request.headers);
+
   return {
     ...hydrogenContext,
     ...context,
+    sanity,
   };
 }

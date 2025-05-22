@@ -44,6 +44,12 @@ export default async function handleRequest(
       "https://fonts.googleapis.com",
       "https://fonts.gstatic.com",
     ],
+    imgSrc: [
+      "self",
+      "data:",
+      "https://cdn.shopify.com",
+      "https://cdn.sanity.io",
+    ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
