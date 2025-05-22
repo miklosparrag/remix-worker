@@ -13,9 +13,9 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { FOOTER_QUERY, HEADER_QUERY } from "~/lib/fragments";
 import { Analytics, getShopAnalytics, useNonce } from "@shopify/hydrogen";
 
-import "tailwindcss";
-import "./app.css";
-//import { PageLayout } from "./components/shopify/PageLayout";
+import "./styles/reset.css";
+import "./styles/app.css";
+import { PageLayout } from "./components/shopify/PageLayout";
 
 export type RootLoader = typeof loader;
 
@@ -149,7 +149,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             shop={data.shop}
             consent={data.consent}
           >
-            {children}
+            <PageLayout {...data}>{children}</PageLayout>
           </Analytics.Provider>
         ) : (
           children

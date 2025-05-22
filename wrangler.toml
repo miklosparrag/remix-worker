@@ -56,3 +56,11 @@ NODE_ENV = "development"
 # [[services]]
 # binding = "MY_SERVICE"
 # service = "my-service"
+
+[[d1_databases]]
+
+binding = "DB"
+database_name = "test-accepted"
+preview_database_id = "848bc94f-46b5-470e-a2d6-4d27c991d587"
+database_id = "848bc94f-46b5-470e-a2d6-4d27c991d587"
+migrations_dir = "drizzle/migrations"
