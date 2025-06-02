@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import type { LoaderFunctionArgs } from "react-router";
 import { fixDevResponse } from "~/lib/devresfix";
 
 export async function loader({ request, context }: LoaderFunctionArgs) {

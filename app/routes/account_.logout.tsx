@@ -1,4 +1,4 @@
-import { redirect, type ActionFunctionArgs } from "@remix-run/cloudflare";
+import { redirect, type ActionFunctionArgs } from "react-router";
 import { fixDevResponse } from "~/lib/devresfix";
 
 // if we don't implement this, /account/logout will get caught by account.$.tsx to do login

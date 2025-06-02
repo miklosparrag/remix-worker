@@ -1,5 +1,5 @@
-import { Form } from "@remix-run/react";
-import { TypedResponse } from "@remix-run/server-runtime";
+import { Form } from "react-router";
+import { TypedResponse } from "react-router";
 
 export function CloudinaryUploadForm() {
   return (

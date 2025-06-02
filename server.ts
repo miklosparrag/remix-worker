@@ -1,9 +1,9 @@
-import { createRequestHandler, type ServerBuild } from "@remix-run/cloudflare";
+import { createRequestHandler } from "react-router";
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore This file won’t exist if it hasn’t yet been built
 //import * as remixBuild from "virtual:remix/server-build";
 
-import * as build from "./dist/server"; // eslint-disable-line import/no-unresolved
 import { storefrontRedirect } from "@shopify/hydrogen";
 import { getLoadContext } from "~/lib/context";
 
@@ -26,6 +26,7 @@ export default {
             ctx: {
               waitUntil: ctx.waitUntil.bind(ctx),
               passThroughOnException: ctx.passThroughOnException.bind(ctx),
+              props: undefined,
             },
             caches,
             env,
@@ -40,7 +41,7 @@ export default {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const handleRequest = createRequestHandler(
-        build as any as ServerBuild,
+        () => import("virtual:react-router/server-build"),
         process.env.NODE_ENV || ""
       );
 

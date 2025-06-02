@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/16/solid";
-import { MetaFunction } from "@remix-run/cloudflare";
+import { MetaFunction } from "react-router";
 import { Footer } from "~/components/radiant//footer";
 import { Gradient } from "~/components/radiant//gradient";
 import { Keyboard } from "~/components/radiant//keyboard";

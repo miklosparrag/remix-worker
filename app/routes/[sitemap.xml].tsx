@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import type { LoaderFunctionArgs } from "react-router";
 import { getSitemapIndex } from "@shopify/hydrogen";
 
 export async function loader({

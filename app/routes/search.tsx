@@ -1,8 +1,5 @@
-import {
-  type LoaderFunctionArgs,
-  type ActionFunctionArgs,
-} from "@remix-run/cloudflare";
-import { useLoaderData, type MetaFunction } from "@remix-run/react";
+import { type LoaderFunctionArgs, type ActionFunctionArgs } from "react-router";
+import { useLoaderData, type MetaFunction } from "react-router";
 import { getPaginationVariables, Analytics } from "@shopify/hydrogen";
 import { SearchForm } from "~/components/shopify/SearchForm";
 import { SearchResults } from "~/components/shopify/SearchResults";

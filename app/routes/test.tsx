@@ -1,5 +1,5 @@
-import { type LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { useFetcher, useLoaderData, type MetaFunction } from "@remix-run/react";
+import { type LoaderFunctionArgs } from "react-router";
+import { useFetcher, useLoaderData, type MetaFunction } from "react-router";
 
 import { ImageKitUploadForm } from "~/components/media/ImageKitUploadForm";
 import { Image, Video } from "@imagekit/react";

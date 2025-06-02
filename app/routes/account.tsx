@@ -1,8 +1,5 @@
-import {
-  data as remixData,
-  type LoaderFunctionArgs,
-} from "@remix-run/cloudflare";
-import { Form, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { data as remixData, type LoaderFunctionArgs } from "react-router";
+import { Form, NavLink, Outlet, useLoaderData } from "react-router";
 import { CUSTOMER_DETAILS_QUERY } from "~/graphql/customer-account/CustomerDetailsQuery";
 
 export function shouldRevalidate() {

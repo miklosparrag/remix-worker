@@ -4,7 +4,7 @@ import assert from "node:assert";
 import { loadQuery } from "~/sanity/loader.server";
 import { FEED_POSTS_QUERY } from "~/sanity/queries";
 import type { FEED_POSTS_QUERYResult } from "~/sanity/types";
-import { LoaderFunctionArgs } from "@remix-run/server-runtime";
+import { LoaderFunctionArgs } from "react-router";
 
 export const loader = async ({ request: req, context }: LoaderFunctionArgs) => {
   let siteUrl = new URL(req.url).origin;

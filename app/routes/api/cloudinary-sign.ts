@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/server-runtime";
+import { LoaderFunctionArgs } from "react-router";
 import { sha256 } from "js-sha256";
 
 function sign_parameters(params: { [index: string]: string }): {

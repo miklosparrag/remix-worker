@@ -1,5 +1,5 @@
-import { useLoaderData, Link } from "@remix-run/react";
-import { type LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { useLoaderData, Link } from "react-router";
+import { type LoaderFunctionArgs } from "react-router";
 import { getPaginationVariables, Image } from "@shopify/hydrogen";
 import type { CollectionFragment } from "storefrontapi.generated";
 import { PaginatedResourceSection } from "~/components/shopify/PaginatedResourceSection";

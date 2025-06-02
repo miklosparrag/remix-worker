@@ -1,5 +1,5 @@
-import { redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { useLoaderData, type MetaFunction } from "@remix-run/react";
+import { redirect, type LoaderFunctionArgs } from "react-router";
+import { useLoaderData, type MetaFunction } from "react-router";
 import { getPaginationVariables, Analytics } from "@shopify/hydrogen";
 import { PaginatedResourceSection } from "~/components/shopify/PaginatedResourceSection";
 import { redirectIfHandleIsLocalized } from "~/lib/redirect";

@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { LoaderFunctionArgs } from "react-router";
 import type Imagekit from "imagekit";
 
 export type AuthParams = ReturnType<Imagekit["getAuthenticationParameters"]> & {

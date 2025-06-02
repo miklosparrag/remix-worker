@@ -3,11 +3,7 @@ import type {
   AddressFragment,
   CustomerFragment,
 } from "customer-accountapi.generated";
-import {
-  data,
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-} from "@remix-run/cloudflare";
+import { data, type ActionFunctionArgs, type LoaderFunctionArgs } from "react-router";
 import {
   Form,
   useActionData,
@@ -15,7 +11,7 @@ import {
   useOutletContext,
   type MetaFunction,
   type Fetcher,
-} from "@remix-run/react";
+} from "react-router";
 import {
   UPDATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,

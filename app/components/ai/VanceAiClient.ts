@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/d1";
 import { eq, and, InferSelectModel } from "drizzle-orm";
-import { AppLoadContext } from "@remix-run/server-runtime";
+import { AppLoadContext } from "react-router";
 import { vanceUploads } from "db/schema/vanceUpload";
 import { vanceJobs } from "db/schema/vanceTransformation";
 import { image } from "~/sanity/image";

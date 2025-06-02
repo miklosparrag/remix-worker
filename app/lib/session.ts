@@ -1,9 +1,5 @@
 import type { HydrogenSession, HydrogenSessionData } from "@shopify/hydrogen";
-import {
-  createCookieSessionStorage,
-  type SessionStorage,
-  type Session,
-} from "@remix-run/cloudflare";
+import { createCookieSessionStorage, type SessionStorage, type Session } from "react-router";
 
 /**
  * This is a custom session implementation for your Hydrogen shop.

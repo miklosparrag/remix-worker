@@ -1,18 +1,8 @@
 import type { CustomerFragment } from "customer-accountapi.generated";
 import type { CustomerUpdateInput } from "@shopify/hydrogen/customer-account-api-types";
 import { CUSTOMER_UPDATE_MUTATION } from "~/graphql/customer-account/CustomerUpdateMutation";
-import {
-  data,
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-} from "@remix-run/cloudflare";
-import {
-  Form,
-  useActionData,
-  useNavigation,
-  useOutletContext,
-  type MetaFunction,
-} from "@remix-run/react";
+import { data, type ActionFunctionArgs, type LoaderFunctionArgs } from "react-router";
+import { Form, useActionData, useNavigation, useOutletContext, type MetaFunction } from "react-router";
 
 export type ActionResponse = {
   error: string | null;

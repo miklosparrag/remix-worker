@@ -1,5 +1,5 @@
-import { useParams } from "@remix-run/react";
-import { LoaderFunctionArgs } from "@remix-run/server-runtime";
+import { useParams } from "react-router";
+import { LoaderFunctionArgs } from "react-router";
 import { param } from "drizzle-orm";
 
 export async function loader({ request }: LoaderFunctionArgs) {

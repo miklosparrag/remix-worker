@@ -1,6 +1,6 @@
 // app/sanity/preview.ts
 
-import { createCookieSessionStorage } from "@remix-run/cloudflare";
+import { createCookieSessionStorage } from "react-router";
 import type { loadQuery } from "~/sanity/loader.server";
 
 const { getSession, commitSession, destroySession } =

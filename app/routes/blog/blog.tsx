@@ -18,7 +18,7 @@ import {
 import { useQuery } from "@sanity/react-loader";
 import { clsx } from "clsx";
 import dayjs from "dayjs";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "react-router";
 import { loadQuery } from "~/sanity/loader.server";
 import {
   CATEGORIES_QUERY,
@@ -33,7 +33,7 @@ import type {
   POSTS_QUERYResult,
   TOTAL_POSTS_QUERYResult,
 } from "~/sanity/types";
-import { LoaderFunctionArgs, MetaArgs } from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, MetaArgs } from "react-router";
 
 import "~/app.css";
 

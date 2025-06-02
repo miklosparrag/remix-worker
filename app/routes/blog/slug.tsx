@@ -10,12 +10,12 @@ import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 import { PortableText } from "@portabletext/react";
 import { useQuery } from "@sanity/react-loader";
 import dayjs from "dayjs";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { loadQuery } from "~/sanity/loader.server";
 import { previewContext } from "~/sanity/preview.server";
 import { POST_QUERY } from "~/sanity/queries";
 import type { POST_QUERYResult } from "~/sanity/types";
-import { LoaderFunctionArgs, MetaArgs } from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, MetaArgs } from "react-router";
 
 function notFound(): never {
   throw new Response(null, {

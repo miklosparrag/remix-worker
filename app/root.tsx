@@ -8,8 +8,8 @@ import {
   useRouteError,
   useRouteLoaderData,
   type ShouldRevalidateFunction,
-} from "@remix-run/react";
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
+} from "react-router";
+import type { LinksFunction, LoaderFunctionArgs } from "react-router";
 import { FOOTER_QUERY, HEADER_QUERY } from "~/lib/fragments";
 import { Analytics, getShopAnalytics, useNonce } from "@shopify/hydrogen";
 

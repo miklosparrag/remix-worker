@@ -1,4 +1,4 @@
-import { type MetaFunction, useLoaderData } from "@remix-run/react";
+import { type MetaFunction, useLoaderData } from "react-router";
 import type { CartQueryDataReturn } from "@shopify/hydrogen";
 import { CartForm } from "@shopify/hydrogen";
 import {
@@ -6,7 +6,7 @@ import {
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
   type HeadersFunction,
-} from "@remix-run/cloudflare";
+} from "react-router";
 import { CartMain } from "~/components/shopify/CartMain";
 
 export const meta: MetaFunction = () => {

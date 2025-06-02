@@ -1,10 +1,10 @@
-import { Link, useLoaderData, type MetaFunction } from "@remix-run/react";
+import { Link, useLoaderData, type MetaFunction } from "react-router";
 import {
   Money,
   getPaginationVariables,
   flattenConnection,
 } from "@shopify/hydrogen";
-import { type LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { type LoaderFunctionArgs } from "react-router";
 import { CUSTOMER_ORDERS_QUERY } from "~/graphql/customer-account/CustomerOrdersQuery";
 import type {
   CustomerOrdersFragment,
