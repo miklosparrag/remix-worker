@@ -1,11 +1,10 @@
 import { drizzle } from "drizzle-orm/d1";
 import { eq, and, InferSelectModel } from "drizzle-orm";
 import { AppLoadContext } from "react-router";
-import { vanceUploads } from "db/schema/vanceUpload";
-import { vanceJobs } from "db/schema/vanceTransformation";
+import { vanceUpload } from "db/schema/vanceUpload";
+import { vanceTransformation } from "db/schema/vanceTransformation";
 import { image } from "~/sanity/image";
 import { PgJsonBuilder } from "drizzle-orm/pg-core";
-import { s } from "node_modules/framer-motion/dist/types.d-CQt5spQA";
 
 type VanceStatus = "finish" | "waiting" | "fatal" | "process";
 
@@ -51,7 +50,7 @@ const checkProgress = async (transId: string) => {
   return data.data.status;
 };
 
-export const vanceUpload = async (
+export const vanceUploadImage = async (
   context: AppLoadContext,
   imageUrl: string,
   name: string,
@@ -80,7 +79,7 @@ export const vanceUpload = async (
   const db = drizzle(context.env.DB);
 
   const result = await db
-    .insert(vanceUploads)
+    .insert(vanceUpload)
     .values({
       uid: data.data.uid,
       name: data.data.name,
@@ -89,7 +88,7 @@ export const vanceUpload = async (
       height: data.data.h,
       filesize: data.data.filesize,
     })
-    .returning({ id: vanceUploads.id, uid: vanceUploads.uid });
+    .returning({ id: vanceUpload.id, uid: vanceUpload.uid });
 
   console.log(result);
 
@@ -110,8 +109,8 @@ export const vanceTransform = async (
     console.log("after db");
     const result = await db
       .select()
-      .from(vanceUploads)
-      .where(eq(vanceUploads.uid, uid))
+      .from(vanceUpload)
+      .where(eq(vanceUpload.uid, uid))
       .limit(1);
 
     image = result[0];
@@ -159,14 +158,14 @@ export const vanceTransform = async (
   }
 
   await db
-    .insert(vanceJobs)
+    .insert(vanceTransformation)
     .values({ jobId: image.jobId, transId, name: image.name, status })
     .onConflictDoNothing();
 };
 
 export const vanceToImagekit = async (
   context: AppLoadContext,
-  vanceJob: InferSelectModel<typeof vanceJobs>
+  vanceJob: InferSelectModel<typeof vanceTransformation>
 ) => {
   const form = new FormData();
   form.append("api_token", process.env.VANCEAI_API_KEY || "");
@@ -187,7 +186,9 @@ export const vanceToImagekit = async (
   console.log("Vance AI transformation uploaded to ImageKit:", vanceJob.name);
 
   const db = drizzle(context.env.DB);
-  await db.delete(vanceJobs).where(eq(vanceJobs.transId, vanceJob.transId));
+  await db
+    .delete(vanceTransformation)
+    .where(eq(vanceTransformation.transId, vanceJob.transId));
 };
 
 export const vanceProcess = async (context: AppLoadContext) => {
@@ -196,7 +197,7 @@ export const vanceProcess = async (context: AppLoadContext) => {
     // error
   }
   const db = drizzle(context.env.DB);
-  const result = await db.select().from(vanceJobs);
+  const result = await db.select().from(vanceTransformation);
   let updated = 0;
   for (const item of result) {
     const createdAt = new Date(item.createdAt);

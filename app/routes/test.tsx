@@ -3,7 +3,10 @@ import { useFetcher, useLoaderData, type MetaFunction } from "react-router";
 
 import { ImageKitUploadForm } from "~/components/media/ImageKitUploadForm";
 import { Image, Video } from "@imagekit/react";
-import { vanceTransform, vanceUpload } from "~/components/ai/VanceAiClient";
+import {
+  vanceTransform,
+  vanceUploadImage,
+} from "~/components/ai/VanceAiClient";
 import { useState } from "react";
 
 export const meta: MetaFunction = () => {
@@ -88,7 +91,7 @@ async function vanceProcess(
 ) {
   console.log("Vance AI process started");
   // This function can be used to initiate a Vance AI process if needed
-  const ret = await vanceUpload(
+  const ret = await vanceUploadImage(
     context,
     imageUrl as string,
     "test.jpg",

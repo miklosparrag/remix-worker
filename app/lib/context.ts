@@ -21,13 +21,6 @@ type GetLoadContextArgs = {
   };
 };
 
-declare module "@remix-run/cloudflare" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface AppLoadContext extends Awaited<ReturnType<typeof getLoadContext>> {
-    // This will merge the result of `getLoadContext` into the `AppLoadContext`
-  }
-}
-
 export async function getLoadContext({ request, context }: GetLoadContextArgs) {
   /**
    * Open a cache instance in the worker and a custom session instance.

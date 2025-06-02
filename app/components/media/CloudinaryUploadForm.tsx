@@ -1,5 +1,4 @@
 import { Form } from "react-router";
-import { TypedResponse } from "react-router";
 
 export function CloudinaryUploadForm() {
   return (
@@ -20,16 +19,15 @@ export function CloudinaryUploadForm() {
           formData.append("asset_folder", "tests");
 
           try {
-            let response: TypedResponse<{ [index: string]: string }> =
-              await fetch("/api/cloudinary-sign", {
-                method: "POST",
-                body: formData,
-              });
+            let response = await fetch("/api/cloudinary-sign", {
+              method: "POST",
+              body: formData,
+            });
             if (!response.ok) {
               throw new Error(`Response status: ${response.status}`);
             }
 
-            let json = await response.json();
+            let json: { [index: string]: string } = await response.json();
 
             formData = new FormData();
 

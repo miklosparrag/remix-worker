@@ -23,16 +23,6 @@ declare global {
   }
 }
 
-declare module "@remix-run/cloudflare" {
-  interface AppLoadContext extends Awaited<ReturnType<typeof getLoadContext>> {
-    // to change context type, change the return of createAppLoadContext() instead
-  }
-
-  interface SessionData extends HydrogenSessionData {
-    // declare local additions to the Remix session data here
-  }
-}
-
 declare module "react-router" {
   // TODO: remove this once we've migrated to `Route.LoaderArgs` for our loaders
   interface LoaderFunctionArgs {
@@ -41,5 +31,12 @@ declare module "react-router" {
   // TODO: remove this once we've migrated to `Route.ActionArgs` for our actions
   interface ActionFunctionArgs {
     context: AppLoadContext;
+  }
+  interface AppLoadContext extends Awaited<ReturnType<typeof getLoadContext>> {
+    // to change context type, change the return of createAppLoadContext() instead
+  }
+
+  interface SessionData extends HydrogenSessionData {
+    // declare local additions to the Remix session data here
   }
 }

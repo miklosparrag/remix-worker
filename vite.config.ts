@@ -7,22 +7,22 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
-    hydrogen(),
+    tailwindcss(),
     reactRouter(),
+    hydrogen(),
     tsconfigPaths(),
   ],
-  ssr: {
+  /*   ssr: {
     resolve: {
       conditions: ["workerd", "worker", "browser"],
     },
   },
   resolve: {
     mainFields: ["browser", "module", "main"],
-  },
+  },*/
   build: {
-    minify: true,
+    //minify: true,
   },
   server: {
     allowedHosts: [
