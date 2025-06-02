@@ -9,6 +9,7 @@ import { CART_QUERY_FRAGMENT } from "./fragments";
 
 import { type PlatformProxy } from "wrangler";
 import { previewContext } from "../sanity/preview.server";
+import Imagekit from "imagekit";
 
 type GetLoadContextArgs = {
   request: Request;
@@ -58,9 +59,16 @@ export async function getLoadContext({ request, context }: GetLoadContextArgs) {
 
   const sanity = await previewContext(request.headers);
 
+  const imagekit = new Imagekit({
+    urlEndpoint: process.env.IMAGEKIT_URL || "",
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "",
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "",
+  });
+
   return {
     ...hydrogenContext,
     ...context,
     sanity,
+    imagekit,
   };
 }
