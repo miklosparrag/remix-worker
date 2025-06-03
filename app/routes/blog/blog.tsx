@@ -33,13 +33,12 @@ import type {
   POSTS_QUERYResult,
   TOTAL_POSTS_QUERYResult,
 } from "~/sanity/types";
-import { LoaderFunctionArgs, MetaArgs } from "react-router";
-
+import type { Route } from "./+types/blog";
 import "~/app.css";
 
 const postsPerPage = 5;
 
-export function meta({}: MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "New React Router App" },
     { name: "description", content: "Welcome to React Router!" },
@@ -53,7 +52,7 @@ function notFound(): never {
   });
 }
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const { searchParams } = new URL(request.url);
 
   let page =

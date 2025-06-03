@@ -8,10 +8,11 @@ import {
   vanceUploadImage,
 } from "~/components/ai/VanceAiClient";
 import { useState } from "react";
+import type { Route } from "./+types/test";
 
-export const meta: MetaFunction = () => {
+export function meta({}: Route.MetaArgs) {
   return [{ title: "Hydrogen | Home" }];
-};
+}
 
 const aiRemoveBackground = {
   job: "matting",
@@ -49,7 +50,7 @@ const aiCartoon2 = {
   },
 };
 
-export async function loader(args: LoaderFunctionArgs) {
+export async function loader(args: Route.LoaderArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
@@ -63,7 +64,7 @@ export async function loader(args: LoaderFunctionArgs) {
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-async function loadCriticalData({ context }: LoaderFunctionArgs) {
+async function loadCriticalData({ context }: Route.LoaderArgs) {
   let files;
   try {
     files = await context.imagekit.listFiles({
@@ -81,12 +82,12 @@ async function loadCriticalData({ context }: LoaderFunctionArgs) {
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-function loadDeferredData({ context }: LoaderFunctionArgs) {
+function loadDeferredData({ context }: Route.LoaderArgs) {
   return {};
 }
 
 async function vanceProcess(
-  context: LoaderFunctionArgs["context"],
+  context: Route.LoaderArgs["context"],
   imageUrl: string | null
 ) {
   console.log("Vance AI process started");
@@ -105,7 +106,7 @@ async function vanceProcess(
   }
 }
 
-export async function action({ request, context }: LoaderFunctionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   console.log("Action called");
   const formData = await request.formData();
   const imageUrl = formData.get("fileUrl");
@@ -129,7 +130,7 @@ export async function action({ request, context }: LoaderFunctionArgs) {
   return null;
 }
 
-export default function Test() {
+export default function Test({}: Route.ComponentProps) {
   const { files } = useLoaderData<typeof loader>();
   const [showUrl, setShowUrl] = useState(null);
   const fetcher = useFetcher();
